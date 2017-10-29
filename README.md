@@ -19,7 +19,7 @@ Should you do that, apart from AGPL-3.0 requirements, please provide
 public attribution to DBindJS or link back to [DBindJS on the web](http://dbindjs.com), 
 or [GitHub](https://github.com/NicolaeIotu/DBindJS), or .
 
-NodeJS package available at https://www.npmjs.com/package/dbindjs. Install with npm install dbindjs.
+NodeJS package available at https://www.npmjs.com/package/dbindjs. Install with ```npm install dbindjs```
 Minified version of DBindJS created with [YUI Compressor]( https://yui.github.io/yuicompressor/ ).<br/>
 Javascript documentation created with [JSDoc]( http://usejsdoc.org ).<br/>
 Website created mostly with [MkDocs]( http://www.mkdocs.org ).<br/>
