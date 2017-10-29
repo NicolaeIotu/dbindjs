@@ -1,21 +1,41 @@
 # DBindJS
-Author IOTU NICOLAE
 
-DBindJS is data binding for Javascript.<br/>
-DBindJS has an unique structure, strategy, functionality and original code which cannot be tracked to other libs.
+DBindJS is data binding for Javascript.
 
-DBindJS is:
-* Data Binding Only
-* Javascript Only
-* Strict Mode Compatible
-* ES5 Compatible
-* Self Sufficient
-* Sync
-* Lightweight
-* Optimised
-* Humans compatible (learn during a break and still feel like during a break)
+DBindJS is my first contribution to the open source community.
+I started this project with the idea of making a Javascript data binding library that could match the 
+efficiency of native data binding (e.g. QML data binding), while keeping as close as possible to 
+Javascript's natural behavior.
 
-Contributors are kindly reminded that Javascript is the world's most misunderstood programming language. Should you need to refresh the theory I strongly recommend https://developer.mozilla.org.
+DBindJS is released under the terms of the GNU Affero General Public License version 3.<br/>
+Released October 2017 DBindJS has unique, original and natural Javascript code, structure and strategy.
+If for any reason another type of licence is required, or a custom version is required 
+please contact the author at nicolae.g.iotu@gmail.com.
+ 
+DBindJS is build on natural Javascript. 
+You can safely use DBindJS as type, as instance, and even extend the type.
+DBindJS structure and/or strategy can be replicated and used in another projects. 
+Should you do that, apart from AGPL-3.0 requirements, please provide 
+public attribution to DBindJS or link back to [DBindJS on the web](http://dbindjs.com), 
+or [GitHub](https://github.com/NicolaeIotu/DBindJS), or .
 
-Got inspired by DBindJS? Should you use DBindJS unique structure and strategy in other projects you are kindly requested to link to DBindJS on the [web](dbindjs.com), or on [GitHub](https://github.com/NicolaeIotu/DBindJS), or provide public explanations about the way DBindJS was used in your projects.
+NodeJS package available at https://www.npmjs.com/package/dbindjs. Install with npm install dbindjs.
+Minified version of DBindJS created with [YUI Compressor]( https://yui.github.io/yuicompressor/ ).<br/>
+Javascript documentation created with [JSDoc]( http://usejsdoc.org ).<br/>
+Website created mostly with [MkDocs]( http://www.mkdocs.org ).<br/>
+
+
+## DBindJS 1.0.0
+
+The first release version of DBindJS incorporates a couple of advantages 
+over existing Javascript data binding libraries:
+
+* data binding only
+* introduced the concept of 'binding pool'
+* ease of use: fast learning, intuitive usage
+* merged updates
+* separation thru namespaces
+* advanced fine tuning
+* consistent protection
+* pause/resume features
 
