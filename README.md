@@ -3,16 +3,14 @@
 DBindJS is data binding for Javascript.
 
 DBindJS is my first contribution to the open source community.
-I started this project with the idea of making a Javascript data binding library that could match the 
-efficiency of native data binding (e.g. QML data binding), while keeping as close as possible to 
-Javascript's natural behavior.
+I started this project with the idea of making a pure ECMA Script data binding utility.
 
 DBindJS is released under the terms of the GNU Affero General Public License version 3.<br/>
-Released October 2017 DBindJS has unique, original and natural Javascript code, structure and strategy.
+Released October 2017 DBindJS has unique, original and natural ECMA Script code, structure and strategy.
 If for any reason another type of licence is required, or a custom version is required 
 please contact the author at nicolae.g.iotu@gmail.com.
  
-DBindJS is build on natural Javascript. 
+DBindJS is build on natural ECMA Script. 
 You can safely use DBindJS as type, as instance, and even extend the type.
 DBindJS structure and/or strategy can be replicated and used in another projects. 
 Should you do that, apart from AGPL-3.0 requirements, please provide 
@@ -21,7 +19,7 @@ or [GitHub](https://github.com/NicolaeIotu/DBindJS), or .
 
 NodeJS package available at https://www.npmjs.com/package/dbindjs. Install with ```npm install dbindjs```<br/>
 Minified version of DBindJS created with [YUI Compressor]( https://yui.github.io/yuicompressor/ ).<br/>
-Javascript documentation created with [JSDoc]( http://usejsdoc.org ).<br/>
+ECMA Script documentation created with [JSDoc]( http://usejsdoc.org ).<br/>
 Website created mostly with [MkDocs]( http://www.mkdocs.org ).<br/>
 
 
