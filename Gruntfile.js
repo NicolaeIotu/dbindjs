@@ -42,8 +42,7 @@ module.exports = function (grunt) {
         command: 'npm publish --dry-run'
       },
       pretest: {
-        command: 'grunt jsdoc && ' +
-          'terser --compress --output "<%= __cwd %>/dist/dbindjs.js" -- "<%= __cwd %>/lib/dbindjs.js" && ' +
+        command: 'terser --compress --output "<%= __cwd %>/dist/dbindjs.js" -- "<%= __cwd %>/lib/dbindjs.js" && ' +
           'browserify -e "<%= __cwd %>/dist/dbindjs.js" -o "<%= __cwd %>/dist/dbindjs.bundle.js" -s' +
           ' dbindjsBundled && ' +
           'node "<%= __cwd %>/scripts/dist-files-insert-license.js"'
