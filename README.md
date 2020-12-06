@@ -2,20 +2,18 @@
 
 **dbindjs** is data binding for Javascript.
 
-**dbindjs** 
-
 Import with `const { dbind } = require('dbindjs')`
+
 
 * [Examples](#examples)
     * [Basic dbindjs](#basic-dbindjs)
     * [Neural networks with dbindjs](#neural-networks-with-dbindjs)
-* <a href="https://nicolaeiotu.github.io/dbindjs" target="_blank" title="dbindjs Documentation">dbindjs 
-  Documentation</a>
+* <a href="https://nicolaeiotu.github.io/dbindjs" target="_blank" title="dbindjs Documentation">dbindjs Documentation</a>
 * [Others](#others)
 
 ## Examples
-A couple of examples are provided here. For more see 
-<a href="https://nicolaeiotu.github.io/dbindjs" title="examples folder on GitHub">examples folder on GitHub</a> and 
+A couple of examples are provided here below. For more see 
+<a href="https://github.com/NicolaeIotu/dbindjs/tree/main/examples" title="examples folder on GitHub">examples folder on GitHub</a> and 
 <a href="https://nicolaeiotu.github.io/dbindjs" target="_blank" title="dbindjs Documentation">dbindjs Documentation</a>.
 
 ### Basic dbindjs
@@ -82,10 +80,10 @@ dbind({ a: 23, f: 45 })
 ```
 
 ### Neural networks with dbindjs
-This example simulates a fully connected neural network of 'maxNeurons' neurons 
-(100000). The number of neurons can be increased or decreased to match testing 
-machine capabilities. When using the default value (100000 neurons), the example 
-should run instantly on a standard personal computer.
+This example simulates a **fully** connected neural network of `maxNeurons` 'neurons' 
+(100000). The number of 'neurons' can be increased or decreased to match testing 
+machine capabilities. When using the default value (100000 'neurons'), the example 
+should run pretty fast on a standard personal computer.
 
 Changes to any components of this network trigger propagation to all 'neurons'.
 
@@ -103,6 +101,8 @@ for (let i = 0; i < maxNeurons; i++) {
       a: Math.random() * 100,
       b: Math.random() * 100000
     },
+    // important! remember fat arrow functions loose 'this',
+    // so don't use them with dbindjs binding functions
     act: function () {
       if (this.neuronData.a > this.neuronData.b) {
         console.log('n' + i + ': ', this.neuronData)

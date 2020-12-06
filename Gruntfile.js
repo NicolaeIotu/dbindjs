@@ -35,7 +35,8 @@ module.exports = function (grunt) {
         options: __preferLocal
       },
       jsdoc: {
-        command: 'rm -rf "<%= __cwd %>/jsdoc" && jsdoc -c "<%= __cwd %>/scripts/jsdoc-conf.js" "<%= __cwd %>"'
+        command: 'rm -rf "<%= __cwd %>/docs" && mkdir "<%= __cwd %>/docs" && ' +
+          'jsdoc -c "<%= __cwd %>/jsdoc/jsdoc-conf.js" "<%= __cwd %>" --readme "<%= __cwd %>/README.md"'
       },
       prepublish: {
         command: 'npm publish --dry-run'

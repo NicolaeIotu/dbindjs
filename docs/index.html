@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1 id="dbindjs">dbindjs</h1>
+<p><strong>dbindjs</strong> is data binding for Javascript.</p>
+<p>Import with <code>const { dbind } = require('dbindjs')</code></p>
+<ul>
+<li><a href="#examples">Examples</a>
+<ul>
+<li><a href="#basic-dbindjs">Basic dbindjs</a></li>
+<li><a href="#neural-networks-with-dbindjs">Neural networks with dbindjs</a></li>
+</ul>
+</li>
+<li><a href="https://nicolaeiotu.github.io/dbindjs" target="_blank" title="dbindjs Documentation">dbindjs Documentation</a></li>
+<li><a href="#others">Others</a></li>
+</ul>
+<h2 id="examples">Examples</h2>
+<p>A couple of examples are provided here below. For more see
+<a href="https://github.com/NicolaeIotu/dbindjs/tree/main/examples" title="examples folder on GitHub">examples folder on GitHub</a> and
+<a href="https://nicolaeiotu.github.io/dbindjs" target="_blank" title="dbindjs Documentation">dbindjs Documentation</a>.</p>
+<h3 id="basic-dbindjs">Basic dbindjs</h3>
+<pre class="prettyprint source"><code>const { dbind } = require('dbindjs')
+
+dbind({
+  // Property, Basic
+  // when the value of this property changes, the bindings depending on it automatically update
+  a: 1,
+
+  // Property, Basic
+  b: 1,
+
+  // Binding, Basic
+  // defines a binding relation (which may include internal bindings) within the pool,
+  // and uses results outside of the pool
+  c: function () {
+    // use references to basic properties of the binding pool
+    const dep = this.d()
+    const inrc = this.a / this.b / dep
+    console.log(inrc)
+
+    // use result somewhere else outside of the binding pool
+    // ...
+  },
+
+  // Binding, Internal
+  // defines a binding relation which is used by other bindings in the binding pool
+  d: function () {
+    const inrd = this.a + this.b + this.f
+    console.log(inrd)
+
+    // output for other bindings
+    return inrd
+  },
+
+  // Binding, Complex
+  // defines a binding relation (which may include internal bindings) within the pool,
+  // uses results outside of the pool
+  // and can be used by other bindings in the binding pool
+  e: function () {
+    // use references to basic properties of the binding pool
+    const dep = this.d()
+    const inre = this.a + this.b + this.f + dep
+    console.log(inre)
+
+    // use result somewhere else outside of the binding pool
+    // ...
+
+    // output for other bindings
+    return inre
+  },
+
+  // Binding, Basic
+  f: 2
+  // ...
+  // ...
+})
+
+// trigger the bindings by changing the values of some dependencies
+dbind({ a: 23, f: 45 })
+</code></pre>
+<h3 id="neural-networks-with-dbindjs">Neural networks with dbindjs</h3>
+<p>This example simulates a <strong>fully</strong> connected neural network of <code>maxNeurons</code> 'neurons'
+(100000). The number of 'neurons' can be increased or decreased to match testing
+machine capabilities. When using the default value (100000 'neurons'), the example
+should run pretty fast on a standard personal computer.</p>
+<p>Changes to any components of this network trigger propagation to all 'neurons'.</p>
+<p>All sorts of actions can be triggered. This example prints a result if 'neuron'
+data meets a certain condition.</p>
+<pre class="prettyprint source"><code>const { dbind } = require('dbindjs')
+
+const maxNeurons = 100000
+const miniBrain = {}
+for (let i = 0; i &lt; maxNeurons; i++) {
+  miniBrain['n' + i] = {
+    synapseFiringTrigger: 0,
+    neuronData: {
+      a: Math.random() * 100,
+      b: Math.random() * 100000
+    },
+    // important! remember fat arrow functions loose 'this',
+    // so don't use them with dbindjs binding functions
+    act: function () {
+      if (this.neuronData.a > this.neuronData.b) {
+        console.log('n' + i + ': ', this.neuronData)
+      }
+      // alter data in order to create randomness for the next calls
+      // this.neuronData.a = Math.random() * 100
+      // this.neuronData.b = Math.random() * 100000
+    }
+  }
+}
+
+const desc = {
+  action1: function () {
+    for (const prop in this) {
+      if (miniBrain.hasOwnProperty(prop) && miniBrain[prop].hasOwnProperty('act')) {
+        miniBrain[prop].act()
+      }
+    }
+  }
+}
+
+for (var prop in miniBrain) {
+  desc[prop] = miniBrain[prop].synapseFiringTrigger
+}
+
+dbind(desc)
+
+// pick a random neuron
+const neuronId = 'n' + Math.round(Math.random() * maxNeurons)
+const shakeTheNetwork = {}
+shakeTheNetwork[neuronId] = dbind.propstore[neuronId].value++
+
+dbind(shakeTheNetwork)
+</code></pre>
+<h2 id="others">Others</h2>
+<p><strong>dbindjs</strong> incorporates a couple of advantages over existing Javascript data binding libraries:</p>
+<ul>
+<li>data binding only</li>
+<li>merged updates</li>
+<li>separation thru namespaces</li>
+<li>advanced fine-tuning</li>
+<li>consistent protection</li>
+<li>pause/resume features</li>
+<li>introduces the concept of 'binding pool'</li>
+</ul>
+<p>Further developments arriving soon.</p>
+<p><strong>dbindjs</strong> is © Copyright 2017-2020 Nicolae Iotu, nicolae.g.iotu@gmail.com</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="prototype.html">prototype</a></li></ul><h3>Classes</h3><ul><li><a href="dbind.html">dbind</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
