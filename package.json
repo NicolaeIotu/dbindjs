@@ -41,7 +41,7 @@
     "grunt-shell": "^3.0.1",
     "underscore": ">=1.12.1",
     "jsdoc": "^3.6.10",
-    "standard": "^16.0.3",
+    "standard": "^17.0.0",
     "tap": "^15.1.6",
     "terser": "^5.5.1"
   }
