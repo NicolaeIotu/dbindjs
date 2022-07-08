@@ -143,7 +143,7 @@ dbind(shakeTheNetwork)
 **dbindjs** incorporates a couple of advantages over existing Javascript data binding libraries:
 * data binding only
 * merged updates
-* separation thru namespaces
+* separation through namespaces
 * advanced fine-tuning
 * consistent protection
 * pause/resume features
