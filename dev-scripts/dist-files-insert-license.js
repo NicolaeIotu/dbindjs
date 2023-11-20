@@ -1,7 +1,9 @@
 'use strict'
 
+import { readdirSync, readFileSync, createWriteStream } from 'fs'
+
 /* dbindjs - data binding for Javascript
-dbindjs is Copyright (C) 2017-2020 Nicolae Iotu, nicolae.g.iotu@gmail.com
+dbindjs is Copyright (C) 2017-2023 Nicolae Iotu, nicolae.g.iotu@gmail.com
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
@@ -9,10 +11,9 @@ You should have received a copy of the GNU Affero General Public License along w
  */
 
 console.log('Inserting license section to ./dist files ...')
-const { readdirSync, readFileSync, createWriteStream } = require('fs')
 
 const licenseText = '/* dbindjs - data binding for Javascript\n' +
-  'dbindjs is Copyright (C) 2017-2020 Nicolae Iotu, nicolae.g.iotu@gmail.com\n' +
+  'dbindjs is Copyright (C) 2017-2023 Nicolae Iotu, nicolae.g.iotu@gmail.com\n' +
   'This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General' +
   ' Public License as published by the Free Software Foundation, either version 3 of the License, or (at your' +
   ' option) any later version.\n' +

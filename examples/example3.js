@@ -1,4 +1,6 @@
-const { dbind: Dbind } = require('../lib/dbindjs')
+'use strict'
+
+import { dbind as Dbind } from '../lib/dbindjs.js'
 
 // the binding bool descriptor
 const desc = {

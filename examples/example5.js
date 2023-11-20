@@ -1,4 +1,6 @@
-const { dbind } = require('../lib/dbindjs')
+'use strict'
+
+import { dbind } from '../lib/dbindjs.js'
 
 // This example simulates a fully connected neural network of 'maxNeurons' neurons
 // (100000). The number of neurons can be increased or decreased to match testing
@@ -41,7 +43,7 @@ const desc = {
   }
 }
 
-for (var prop in miniBrain) {
+for (const prop in miniBrain) {
   desc[prop] = miniBrain[prop].synapseFiringTrigger
 }
 

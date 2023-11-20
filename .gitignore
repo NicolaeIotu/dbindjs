@@ -2,17 +2,17 @@
 /.*
 
 !/.github
+!/dev-scripts
 !/dist
 !/docs
 !/examples
+!/jsdoc
 !/lib
-!/scripts
 !/test
 !.eslintrc.json
 !.gitignore
 !.npmignore
 !CHANGELOG.md
-!Gruntfile.js
 !LICENSE
 !NOTICE
 !package.json

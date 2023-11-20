@@ -1,4 +1,6 @@
-const { dbind } = require('../lib/dbindjs')
+'use strict'
+
+import { dbind } from '../lib/dbindjs.js'
 
 dbind({
   // Property, Basic
@@ -10,14 +12,14 @@ dbind({
 
   // Binding, Basic
   // defines a binding relation (which may include internal bindings) within the pool,
-  // and uses results outside of the pool
+  // and uses results outside the pool
   c: function () {
     // use references to basic properties of the binding pool
     const dep = this.d()
     const inrc = this.a / this.b / dep
     console.log(inrc)
 
-    // use result somewhere else outside of the binding pool
+    // use result somewhere else outside the binding pool
     // ...
   },
 
@@ -33,7 +35,7 @@ dbind({
 
   // Binding, Complex
   // defines a binding relation (which may include internal bindings) within the pool,
-  // uses results outside of the pool
+  // uses results outside the pool
   // and can be used by other bindings in the binding pool
   e: function () {
     // use references to basic properties of the binding pool
@@ -41,7 +43,7 @@ dbind({
     const inre = this.a + this.b + this.f + dep
     console.log(inre)
 
-    // use result somewhere else outside of the binding pool
+    // use result somewhere else outside the binding pool
     // ...
 
     // output for other bindings

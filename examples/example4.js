@@ -1,4 +1,6 @@
-const { dbind } = require('../lib/dbindjs')
+'use strict'
+
+import { dbind } from '../lib/dbindjs.js'
 
 const holder = {
   n0: {

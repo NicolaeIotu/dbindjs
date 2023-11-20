@@ -2,14 +2,31 @@
 
 **dbindjs** is data binding for Javascript.
 
-Import with `const { dbind } = require('dbindjs')`
+Import with `import { dbind } from 'dbindjs'`
 
 
+* [Run in Browser](#run-in-browser)
 * [Examples](#examples)
     * [Basic dbindjs](#basic-dbindjs)
     * [Neural networks with dbindjs](#neural-networks-with-dbindjs)
 * <a href="https://nicolaeiotu.github.io/dbindjs" target="_blank" title="dbindjs Documentation">dbindjs Documentation</a>
 * [Others](#others)
+
+## Run in Browser
+Probably the easiest way to make **dbindjs** run in browser is to upload the file *dist/dbindjs.js* to the scripts' location of your webserver and use a standard import as follows:
+```html
+<html>
+  <head>
+    ...
+  </head>
+  <body>
+      <script type="module">
+        import { dbind } from './scripts/dbindjs.js'
+        // ...
+      </script>
+  </body>
+</html>
+```
 
 ## Examples
 A couple of examples are provided here below. For more see 
@@ -19,7 +36,7 @@ A couple of examples are provided here below. For more see
 ### Basic dbindjs
 
 ```
-const { dbind } = require('dbindjs')
+import { dbind } from 'dbindjs'
 
 dbind({
   // Property, Basic
@@ -90,7 +107,7 @@ Changes to any components of this network trigger propagation to all 'neurons'.
 All sorts of actions can be triggered. This example prints a result if 'neuron' 
 data meets a certain condition.
 ```
-const { dbind } = require('dbindjs')
+import { dbind } from 'dbindjs'
 
 const maxNeurons = 100000
 const miniBrain = {}
@@ -151,4 +168,4 @@ dbind(shakeTheNetwork)
 
 Further developments arriving soon.
 
-**dbindjs** is © Copyright 2017-2020 Nicolae Iotu, nicolae.g.iotu@gmail.com
+**dbindjs** is © Copyright 2017-2023 Nicolae Iotu, nicolae.g.iotu@gmail.com

@@ -1,4 +1,6 @@
-const { dbind: Dbind } = require('../lib/dbindjs')
+'use strict'
+
+import { dbind as Dbind } from '../lib/dbindjs.js'
 
 // the binding bool descriptor
 const desc = {
@@ -21,7 +23,7 @@ const dbindInstance = new Dbind(desc)
 
 // watch the function d being triggered by changing the value of one of its dependencies
 dbindInstance.update({ y: 11 })
-// however function d is also triggered by changing properties which are not among its dependencies
+// however, function d is also triggered by changing properties which are not among its dependencies
 // this shows that once declared, the whole binding pool is connected
 dbindInstance.update({ a: 7 })
 

@@ -1,18 +1,19 @@
-const tap = require('tap')
-const { dbind } = require(`${process.cwd()}/lib/dbindjs`)
+'use strict'
 
-let desc = {
+import t from 'tap'
+import { dbind } from '../dist/dbindjs.js'
+
+const desc = {
   v: 2,
   t: 1,
   k: function () {
-    var a = this.t + this.v
-    return a
+    return this.t + this.v
   }
 }
 
 dbind(desc)
 
-var dp = dbind.prototype
+const dp = dbind.prototype
 // define a binding function in the same binding pool and make it dependable on a lesser number of basic properties
 dp.addData(dbind, 'x', 2)
 dp.addData(dbind,
@@ -29,4 +30,4 @@ dbind({ t: 11 })
 // trigger only 'custom_binding'
 dbind({ x: 4 })
 
-tap.equal(dbind.propstore.k.value(), 13)
+t.equal(dbind.propstore.k.value(), 13)
