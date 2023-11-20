@@ -9,7 +9,6 @@ Import with `import { dbind } from 'dbindjs'`
 * [Examples](#examples)
     * [Basic dbindjs](#basic-dbindjs)
     * [Neural networks with dbindjs](#neural-networks-with-dbindjs)
-* <a href="https://nicolaeiotu.github.io/dbindjs" target="_blank" title="dbindjs Documentation">dbindjs Documentation</a>
 * [Others](#others)
 
 ## Run in Browser
@@ -31,7 +30,7 @@ Probably the easiest way to make **dbindjs** run in browser is to upload the fil
 ## Examples
 A couple of examples are provided here below. For more see 
 <a href="https://github.com/NicolaeIotu/dbindjs/tree/main/examples" title="examples folder on GitHub">examples folder on GitHub</a> and 
-<a href="https://nicolaeiotu.github.io/dbindjs" target="_blank" title="dbindjs Documentation">dbindjs Documentation</a>.
+<a href="https://github.com/NicolaeIotu/dbindjs/tree/main/docs" title="docs folder on GitHub">docs folder on GitHub</a>.
 
 ### Basic dbindjs
 
