@@ -1,4 +1,11 @@
+## v3.1.0 Dbindjs is now a module
+
+* Eliminated all dependencies and surplus actions
+* Updated actions
+* Improved tests with 100% coverage
+
 ## v3.0.0 Dbindjs is now a module
+
 * Switched to module
 * Adapted tests and examples to match module requirements
 * Dbindjs is now available as class only
