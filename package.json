@@ -5,15 +5,13 @@
   "main": "dist/dbindjs.js",
   "type": "module",
   "scripts": {
-    "start": "npm run build && node dist/dbindjs.js",
-    "test": "tap --timeout=0 --reporter=base test",
-    "eslintFixDryRun": "eslint --fix-dry-run -c .eslintrc.json",
-    "eslintFix": "eslint --fix -c .eslintrc.json",
-    "reset": "node ./dev-scripts/app-reset.js && npm install",
-    "build": "terser --compress --output dist/dbindjs.js -- lib/dbindjs.js && node dev-scripts/dist-files-insert-license.js",
-    "jsdoc": "node dev-scripts/jsdoc-purge.js && jsdoc -c jsdoc/jsdoc-conf.json ./ --readme README.md",
-    "publishDryRun": "npm publish --dry-run",
-    "prepublish": "npm run build && npm run jsdoc"
+    "build": "npm -y exec -- terser --compress --output dist/dbindjs.js -- lib/dbindjs.js",
+    "jsdoc": "node dev-scripts/jsdoc-purge.js && npm -y exec -- jsdoc -c jsdoc/jsdoc-conf.json ./ --readme README.md",
+    "preversion": "npm -y exec -- standard --fix lib/* && npm test && npm run build && npm run jsdoc",
+    "version": "git add -A dist lib docs",
+    "standard": "npm -y exec -- standard lib/*",
+    "coverage": "node --experimental-test-coverage test/main.js coverage",
+    "test": "node --experimental-test-coverage test/main.js"
   },
   "repository": {
     "type": "git",
@@ -37,15 +35,5 @@
   "bugs": {
     "url": "https://github.com/NicolaeIotu/dbindjs/issues"
   },
-  "homepage": "https://github.com/NicolaeIotu/dbindjs#readme",
-  "devDependencies": {
-    "eslint": "^8.54.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "jsdoc": "^4.0.2",
-    "tap": "^18.6.1",
-    "terser": "^5.24.0"
-  }
+  "homepage": "https://github.com/NicolaeIotu/dbindjs#readme"
 }

@@ -51,7 +51,7 @@ dbind(desc)
 
 // pick a random neuron
 const neuronId = 'n' + Math.round(Math.random() * maxNeurons)
-const shakeTheNetwork = {}
-shakeTheNetwork[neuronId] = dbind.propstore[neuronId].value++
+const probe = {}
+probe[neuronId] = dbind.propstore[neuronId].value++
 
-dbind(shakeTheNetwork)
+dbind(probe)

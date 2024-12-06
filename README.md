@@ -148,10 +148,10 @@ dbind(desc)
 
 // pick a random neuron
 const neuronId = 'n' + Math.round(Math.random() * maxNeurons)
-const shakeTheNetwork = {}
-shakeTheNetwork[neuronId] = dbind.propstore[neuronId].value++
+const probe = {}
+probe[neuronId] = dbind.propstore[neuronId].value++
 
-dbind(shakeTheNetwork)
+dbind(probe)
 ```
 
 ## Others
@@ -167,4 +167,4 @@ dbind(shakeTheNetwork)
 
 Further developments arriving soon.
 
-**dbindjs** is © Copyright 2017-2023 Nicolae Iotu, nicolae.g.iotu@gmail.com
+**dbindjs** is © Copyright 2017-2024 Nicolae Iotu, nicolae.g.iotu@gmail.com
