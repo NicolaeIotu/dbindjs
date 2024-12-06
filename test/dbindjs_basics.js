@@ -1,7 +1,8 @@
 'use strict'
 
-import t from 'tap'
-import { dbind } from '../dist/dbindjs.js'
+import { dbind } from '../lib/dbindjs.js'
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
 
 const desc = {
   v: 2,
@@ -30,4 +31,8 @@ dbind({ t: 11 })
 // trigger only 'custom_binding'
 dbind({ x: 4 })
 
-t.equal(dbind.propstore.k.value(), 13)
+test('Test basics', async (t) => {
+  await t.test('Ok',() => {
+    assert.equal(dbind.propstore.k.value(), 13)
+  })
+})

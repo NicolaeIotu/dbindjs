@@ -1,9 +1,12 @@
 'use strict'
 
-import t from 'tap'
 import { dbind } from '../lib/dbindjs.js'
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
 
-dbind({
+let external_var = 0
+
+const desc = {
   // Property, Basic
   // when the value of this property changes, the bindings depending on it automatically update
   a: 1,
@@ -16,8 +19,8 @@ dbind({
   // and uses results outside of the pool
   c: function () {
     // use references to basic properties of the binding pool
-    var dep = this.d()
-    var inrc = this.a / this.b / dep
+    const dep = this.d()
+    external_var = this.a / this.b / dep
     // console.log(inrc)
 
     // use result somewhere else outside of the binding pool
@@ -27,7 +30,7 @@ dbind({
   // Binding, Internal
   // defines a binding relation which is used by other bindings in the binding pool
   d: function () {
-    var inrd = this.a + this.b + this.f
+    const inrd = this.a + this.b + this.f
     // console.log(inrd)
 
     // output for other bindings
@@ -40,8 +43,8 @@ dbind({
   // and can be used by other bindings in the binding pool
   e: function () {
     // use references to basic properties of the binding pool
-    var dfn = this.d()
-    var inre = this.a + this.b + dfn
+    const dfn = this.d()
+    const inre = this.a + this.b + dfn
     // console.log(inre)
 
     // use result somewhere else outside of the binding pool
@@ -52,12 +55,99 @@ dbind({
   },
 
   // Binding, Basic
-  f: 2
+  f: 2,
   // ...
   // ...
+
+  z: function () {}
+}
+dbind(desc)
+
+test('Test complex', async (t) => {
+  dbind({ a: 23, f: 45 })
+  await t.test('Ok', () => {
+    assert.equal(dbind.propstore.e.value(), 93)
+  })
+
+  await t.test('Error', () => {
+    const a_propstore = dbind.propstore.a
+    dbind.propstore.a = {}
+    dbind({ a: 34, f: 56 })
+    assert.notEqual(dbind.propstore.e.value(), 126)
+    dbind.propstore.a = a_propstore
+    dbind({ a: 34, f: 56 })
+
+    dbind({ bindstore: 1 }, { a: 12, f: 34 })
+    assert.equal(dbind.propstore.e.value(), 126)
+
+    assert.throws(() => dbind.prototype.runUpdateQueue({ updateQueue: 1 }))
+
+    assert.throws(() => dbind.prototype.addData(
+      { propstore: 1, bindstore: 2 },
+      'a',
+      1,
+      null
+    ))
+    assert.throws(() => dbind.prototype.addData(
+      { aa: 1, bb: 2 },
+      'a',
+      1,
+      null
+    ))
+    assert.throws(() => dbind.prototype.addData(
+      null,
+      'a',
+      1,
+      null
+    ))
+
+    assert.throws(() => dbind.prototype.updateDataBindings(
+      { propstore: 1, bindstore: 2 }))
+    dbind.prototype.updateDataBindings(
+      {
+        settings: { mergeUpdates: false },
+        propstore: {
+          z: {
+            dependencies: ['z']
+          }
+        }
+      },
+      'z'
+    )
+  })
 })
 
-// trigger the bindings by changing the value of the dependencies
-dbind({ a: 23, f: 45 })
+test('Test "pause/refresh/resume/reset"', async (t) => {
+  const prev_external_var = external_var
+  dbind.prototype.pause()
+  dbind({ a: 1, f: 2 })
+  assert.equal(external_var, prev_external_var)
 
-t.equal(dbind.propstore.e.value(), 93)
+  assert.throws(() => dbind.prototype.pause({}))
+
+  assert.throws(() => dbind.prototype.refresh({}))
+  dbind.prototype.refresh({
+    settings: {}
+  })
+  assert.equal(external_var, prev_external_var)
+  dbind.prototype.refresh({
+    settings: {},
+    propstore: {
+      tt: {
+        dependencies: null,
+        value: 1,
+        previousValue: 2,
+      }
+    }
+  })
+  dbind.prototype.refresh()
+
+  assert.throws(() => dbind.prototype.resume({}))
+  dbind.prototype.resume()
+  assert.notEqual(external_var, prev_external_var)
+
+  assert.throws(() => dbind.prototype.reset({}))
+  dbind.prototype.reset()
+  assert.ok(Object.prototype.hasOwnProperty.call(dbind, 'updateQueue'))
+  assert.ok(dbind.updateQueue.length === 0)
+})

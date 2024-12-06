@@ -1,6 +1,8 @@
 'use strict'
 
 import { dbind } from '../lib/dbindjs.js'
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
 
 // the binding bool descriptor
 const desc = {
@@ -8,9 +10,7 @@ const desc = {
   b: 2,
   c: 3,
   d: function () {
-    const val = this.x + this.y / this.z
-    console.log('d updated val: ', val)
-    // ...
+    return this.x + this.y / this.z
   },
   x: 4,
   y: 5,
@@ -33,3 +33,9 @@ dbindInstance.propstore.d.dependencies = ['x', 'y', 'z']
 dbindInstance.update({ a: 22 })
 // changing dependencies has the desired effect
 dbindInstance.update({ x: 100, z: 44 })
+
+test('Test instance', async (t) => {
+  await t.test('Ok',() => {
+    assert.equal(dbindInstance.propstore.d.value(), 100.25)
+  })
+})
