@@ -763,11 +763,89 @@ Returns a function through its getter. The return function is normally called in
 
     <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>// the binding pool descriptorconst desc = {    a: 1,    v: 2,    t: 1,    k: function () {        let val = this.t / this.v / this.g        console.log('k updated val: ', val)        // ...    },    g: 7,    r: 4}const inst = new dbind(desc) // in this case the bindHolder is inst (instance of dbind)// add new binding function 'custom_binding'inst.addData(inst,    'custom_binding',    function() {        let val = this.a + this.r        console.log('custom_binding updated val: ', val)        // ...    },    ['r', 'a'])// trigger 'custom_binding'inst.update({ a: 3, r: 8 }) // equivalent to inst.constructor({ a: 3, r: 8 })// in console can be noticed that binding function 'k' gets triggered as well// because some of its dependencies (a and r) in the binding pool descriptor 'desc' changed values// This can be avoided. See the third example.</code></pre>
+    <pre class="prettyprint"><code>// the binding pool descriptor
+const desc = {
+    a: 1,
+    v: 2,
+    t: 1,
+    k: function () {
+        let val = this.t / this.v / this.g
+        console.log('k updated val: ', val)
+        // ...
+    },
+    g: 7,
+    r: 4
+}
 
-    <pre class="prettyprint"><code>// notice the binding bool descriptor is missing property g, required by binding function kconst desc = {    v: 2,    t: 1,    k: function () {        let a = this.t + this.v + this.g        console.log("k updated 'a' value: ", a)        // ...    }}dbind(desc) // in this case the default bindHolder is dbind (dbind used as type)// add missing property gdbind.prototype.addData(dbind, 'g', 7)// and update the dependencies of kdbind.propstore.k.dependencies.push('g')// trigger the bindingdbind({ g: 1 })</code></pre>
+const inst = new dbind(desc) // in this case the bindHolder is inst (instance of dbind)
 
-    <pre class="prettyprint"><code>const desc = {    v: 2,    t: 1,    k: function () {        let a = this.t + this.v        console.log("k updated 'a' value: ", a)        // ...    }}dbind(desc)const dp = dbind.prototype// define a binding function in the same binding pool and make it dependable on a lesser number of basic propertiesdp.addData(dbind, 'x', 2)dp.addData(dbind,    'custom_binding',    function() {        console.log("custom_binding updated 'x' value: ", this.x)        // ...    }, ['x'])// trigger only the initial binding kdbind({t: 11})// trigger only 'custom_binding'dbind({x: 4})</code></pre>
+// add new binding function 'custom_binding'
+inst.addData(inst,
+    'custom_binding',
+    function() {
+        let val = this.a + this.r
+        console.log('custom_binding updated val: ', val)
+        // ...
+    },
+    ['r', 'a'])
+
+
+// trigger 'custom_binding'
+inst.update({ a: 3, r: 8 }) // equivalent to inst.constructor({ a: 3, r: 8 })
+// in console can be noticed that binding function 'k' gets triggered as well
+// because some of its dependencies (a and r) in the binding pool descriptor 'desc' changed values
+// This can be avoided. See the third example.</code></pre>
+
+    <pre class="prettyprint"><code>// notice the binding bool descriptor is missing property g, required by binding function k
+const desc = {
+    v: 2,
+    t: 1,
+    k: function () {
+        let a = this.t + this.v + this.g
+        console.log("k updated 'a' value: ", a)
+        // ...
+    }
+}
+
+dbind(desc) // in this case the default bindHolder is dbind (dbind used as type)
+
+// add missing property g
+dbind.prototype.addData(dbind, 'g', 7)
+// and update the dependencies of k
+dbind.propstore.k.dependencies.push('g')
+
+// trigger the binding
+dbind({ g: 1 })</code></pre>
+
+    <pre class="prettyprint"><code>const desc = {
+    v: 2,
+    t: 1,
+    k: function () {
+        let a = this.t + this.v
+        console.log("k updated 'a' value: ", a)
+        // ...
+    }
+}
+
+dbind(desc)
+
+const dp = dbind.prototype
+// define a binding function in the same binding pool and make it dependable on a lesser number of basic properties
+dp.addData(dbind, 'x', 2)
+dp.addData(dbind,
+    'custom_binding',
+    function() {
+        console.log("custom_binding updated 'x' value: ", this.x)
+        // ...
+    },
+ ['x'])
+
+
+// trigger only the initial binding k
+dbind({t: 11})
+
+// trigger only 'custom_binding'
+dbind({x: 4})</code></pre>
 
 
 
@@ -927,7 +1005,25 @@ Returns a function through its getter. The <em>bindHolder</em> provided as argum
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const desc = {    v: 2,    t: 1,    k: function () {        // ...    }}const inst = new dbind(desc)dbind.pause(inst)const dbindjsRuntimeProps = [inst.bindstore, inst.propstore, inst.settings, inst.updateQueue]dbind.prototype.defaultRuntime(inst)console.log(dbindjsRuntimeProps[0] == inst.bindstore, dbindjsRuntimeProps[0], inst.bindstore) // false ...console.log(dbindjsRuntimeProps[1] == inst.propstore, dbindjsRuntimeProps[1], inst.propstore) // false ...console.log(dbindjsRuntimeProps[2].pause == inst.settings.pause, dbindjsRuntimeProps[2], inst.settings) // false ...console.log(dbindjsRuntimeProps[3] == inst.updateQueue, dbindjsRuntimeProps[3], inst.updateQueue) // false ...</code></pre>
+    <pre class="prettyprint"><code>const desc = {
+    v: 2,
+    t: 1,
+    k: function () {
+        // ...
+    }
+}
+
+const inst = new dbind(desc)
+dbind.pause(inst)
+
+const dbindjsRuntimeProps = [inst.bindstore, inst.propstore, inst.settings, inst.updateQueue]
+
+dbind.prototype.defaultRuntime(inst)
+
+console.log(dbindjsRuntimeProps[0] == inst.bindstore, dbindjsRuntimeProps[0], inst.bindstore) // false ...
+console.log(dbindjsRuntimeProps[1] == inst.propstore, dbindjsRuntimeProps[1], inst.propstore) // false ...
+console.log(dbindjsRuntimeProps[2].pause == inst.settings.pause, dbindjsRuntimeProps[2], inst.settings) // false ...
+console.log(dbindjsRuntimeProps[3] == inst.updateQueue, dbindjsRuntimeProps[3], inst.updateQueue) // false ...</code></pre>
 
 
 
@@ -1066,7 +1162,21 @@ Returns a function through its getter. Call this function with any value as argu
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>let myobj = {}// myobj.sub1 will be defined as a non-configurable, non-enumerable and non-writable empty objectObject.defineProperty(myobj, 'sub1', dbind.prototype.explicitDefaults({}))// myobj.sub1 cannot be deleted (TypeError in strict mode)delete myobj.sub1console.log(myobj.sub1)// or modifiedmyobj.sub1 = 11console.log(myobj.sub1)// but the structure of myobj.sub1 can still be modifiedmyobj.sub1.three = 3console.log(myobj.sub1)</code></pre>
+    <pre class="prettyprint"><code>let myobj = {}
+// myobj.sub1 will be defined as a non-configurable, non-enumerable and non-writable empty object
+Object.defineProperty(myobj, 'sub1', dbind.prototype.explicitDefaults({}))
+
+// myobj.sub1 cannot be deleted (TypeError in strict mode)
+delete myobj.sub1
+console.log(myobj.sub1)
+
+// or modified
+myobj.sub1 = 11
+console.log(myobj.sub1)
+
+// but the structure of myobj.sub1 can still be modified
+myobj.sub1.three = 3
+console.log(myobj.sub1)</code></pre>
 
 
 
@@ -1205,7 +1315,17 @@ Returns a function through its getter. Call this function with any value as argu
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>let myobj = {}// myobj.sub1 will be defined as a non-configurable, enumerable and writable empty objectObject.defineProperty(myobj, 'sub2', dbind.prototype.explicitNonConfigurable({}))// myobj.sub1 cannot be deleted (TypeError in strict mode)delete myobj.sub2console.log(myobj.sub2)// but can be modifiedmyobj.sub2 = []console.log(myobj.sub2)</code></pre>
+    <pre class="prettyprint"><code>let myobj = {}
+// myobj.sub1 will be defined as a non-configurable, enumerable and writable empty object
+Object.defineProperty(myobj, 'sub2', dbind.prototype.explicitNonConfigurable({}))
+
+// myobj.sub1 cannot be deleted (TypeError in strict mode)
+delete myobj.sub2
+console.log(myobj.sub2)
+
+// but can be modified
+myobj.sub2 = []
+console.log(myobj.sub2)</code></pre>
 
 
 
@@ -1377,7 +1497,23 @@ The <em>bindHolder</em> is paused by changing its <em>settings.pause</em> proper
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>let cNamespace = {}const desc = {    a: 1,    b: function() {        console.log('updated a value: ', this.a)    }}dbind(cNamespace, desc)// pause the updating of bindings on dbinddbind.pause(cNamespace) // shortcut to dbind.prototype.pause// the binding is not updated,dbind(cNamespace, {a: 3})// but preparations for updating are completedconsole.log(cNamespace.updateQueue) // Array [ b() ]</code></pre>
+    <pre class="prettyprint"><code>let cNamespace = {}
+const desc = {
+    a: 1,
+    b: function() {
+        console.log('updated a value: ', this.a)
+    }
+}
+
+dbind(cNamespace, desc)
+
+// pause the updating of bindings on dbind
+dbind.pause(cNamespace) // shortcut to dbind.prototype.pause
+
+// the binding is not updated,
+dbind(cNamespace, {a: 3})
+// but preparations for updating are completed
+console.log(cNamespace.updateQueue) // Array [ b() ]</code></pre>
 
 
 
@@ -1548,7 +1684,22 @@ Returns a function through its getter. Return function can be effectively called
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const desc = {    a: 1,    b: function() {        console.log('updated a value: ', this.a)    }}dbind(desc)// pause the updating of bindingsdbind.pause() // shortcut to dbind.prototype.pausedbind({a: 3})// run pending updatesdbind.refresh()</code></pre>
+    <pre class="prettyprint"><code>const desc = {
+    a: 1,
+    b: function() {
+        console.log('updated a value: ', this.a)
+    }
+}
+
+dbind(desc)
+
+// pause the updating of bindings
+dbind.pause() // shortcut to dbind.prototype.pause
+
+dbind({a: 3})
+
+// run pending updates
+dbind.refresh()</code></pre>
 
 
 
@@ -1887,7 +2038,24 @@ Return function unpauses the <em>bindHolder</em> by changing its <em>settings.pa
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const desc = {    a: 1,    b: function() {        console.log('updated a value: ', this.a)    }}dbind(desc)// pause the updating of bindingsdbind.pause() // shortcut to dbind.prototype.pausedbind({a: 3})// run pending updates and unpause dbinddbind.resume()console.log(dbind.settings.pause) // false</code></pre>
+    <pre class="prettyprint"><code>const desc = {
+    a: 1,
+    b: function() {
+        console.log('updated a value: ', this.a)
+    }
+}
+
+dbind(desc)
+
+// pause the updating of bindings
+dbind.pause() // shortcut to dbind.prototype.pause
+
+dbind({a: 3})
+
+// run pending updates and unpause dbind
+dbind.resume()
+
+console.log(dbind.settings.pause) // false</code></pre>
 
 
 
@@ -2047,7 +2215,24 @@ Returns a function through its getter. Call this function using a <em>bindHolder
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const desc = {    a: 1,    b: function() {        console.log('updated a value: ', this.a)    }}dbind(desc)// pause the updating of bindingsdbind.pause() // shortcut to dbind.prototype.pausedbind({a: 3})// run all pending updatesdbind.prototype.runUpdateQueue(dbind)console.log(dbind.updateQueue) // empty array</code></pre>
+    <pre class="prettyprint"><code>const desc = {
+    a: 1,
+    b: function() {
+        console.log('updated a value: ', this.a)
+    }
+}
+
+dbind(desc)
+
+// pause the updating of bindings
+dbind.pause() // shortcut to dbind.prototype.pause
+
+dbind({a: 3})
+
+// run all pending updates
+dbind.prototype.runUpdateQueue(dbind)
+
+console.log(dbind.updateQueue) // empty array</code></pre>
 
 
 
@@ -2250,7 +2435,28 @@ When using an instance of <em>dbind</em> it is mandatory to use update method or
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const desc = {    a: 1,    b: function() {         console.log("updated 'a' value: ", this.a)    }}dbind(desc) // type dbindconst inst = new dbind(desc) // instance of dbind// update the type: is sufficient to use the class constructordbind({a: 3})// update the instanceinst.update({a: 3})// , orinst.constructor({a: 5})// TypeError: inst is not a functioninst({a: 7})</code></pre>
+    <pre class="prettyprint"><code>const desc = {
+    a: 1,
+    b: function() {
+         console.log("updated 'a' value: ", this.a)
+    }
+}
+
+dbind(desc) // type dbind
+
+const inst = new dbind(desc) // instance of dbind
+
+// update the type: is sufficient to use the class constructor
+dbind({a: 3})
+
+
+// update the instance
+inst.update({a: 3})
+// , or
+inst.constructor({a: 5})
+
+// TypeError: inst is not a function
+inst({a: 7})</code></pre>
 
 
 
@@ -2435,7 +2641,40 @@ A call to <em>updateDataBindings</em> is also performed from <em>dbind.prototype
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const desc = {    a: 1,    b: function() {        console.log('updated a value: ', this.a)    }}dbind(desc)// manually alter a.valuedbind.propstore.a.value = 11// nothing to update at the momentconst pastUQ = dbind.updateQueueconsole.log(pastUQ) // empty array// manually update dbind.updateQueuedbind.prototype.updateDataBindings(dbind, 'a')// ready to updateconsole.log(dbind.updateQueue) // Array [ b() ]// updatedbind.refresh()//// when changing values in dbind.bindstore, it is not necessary to call dbind.prototype.updateDataBindingsdbind.bindstore.a = 22// ready to updateconsole.log(dbind.updateQueue) // Array [ b() ]// updatedbind.refresh()</code></pre>
+    <pre class="prettyprint"><code>const desc = {
+    a: 1,
+    b: function() {
+        console.log('updated a value: ', this.a)
+    }
+}
+
+dbind(desc)
+
+// manually alter a.value
+dbind.propstore.a.value = 11
+
+// nothing to update at the moment
+const pastUQ = dbind.updateQueue
+console.log(pastUQ) // empty array
+
+// manually update dbind.updateQueue
+dbind.prototype.updateDataBindings(dbind, 'a')
+
+// ready to update
+console.log(dbind.updateQueue) // Array [ b() ]
+
+// update
+dbind.refresh()
+
+
+//// when changing values in dbind.bindstore, it is not necessary to call dbind.prototype.updateDataBindings
+dbind.bindstore.a = 22
+
+// ready to update
+console.log(dbind.updateQueue) // Array [ b() ]
+
+// update
+dbind.refresh()</code></pre>
 
 
 
@@ -2461,7 +2700,7 @@ A call to <em>updateDataBindings</em> is also performed from <em>dbind.prototype
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a>
 </footer>
 
 <script> prettyPrint(); </script>

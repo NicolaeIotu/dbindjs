@@ -1,6 +1,6 @@
 'use strict'
 
-import { dbind as Dbind } from '../lib/dbindjs.js'
+import { dbind } from '../lib/dbindjs.js'
 
 // the binding bool descriptor
 const desc = {
@@ -18,7 +18,7 @@ const desc = {
 }
 
 // dbindInstance (instance of dbind)
-const dbindInstance = new Dbind(desc)
+const dbindInstance = new dbind(desc)
 
 // add a basic property to the binding pool
 dbindInstance.addData(dbindInstance, 'r', 55)

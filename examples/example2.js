@@ -1,6 +1,6 @@
 'use strict'
 
-import { dbind as Dbind } from '../lib/dbindjs.js'
+import { dbind } from '../lib/dbindjs.js'
 
 // the binding bool descriptor
 const desc = {
@@ -19,7 +19,7 @@ const desc = {
 
 // dbindInstance (instance of dbind) creates an isolated namespace
 // in this namespace ALL the properties react when the value of one of them changes
-const dbindInstance = new Dbind(desc)
+const dbindInstance = new dbind(desc)
 
 // watch the function d being triggered by changing the value of one of its dependencies
 dbindInstance.update({ y: 11 })
