@@ -1,6 +1,6 @@
 {
   "name": "dbindjs",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Data Binding for Javascript",
   "main": "dist/dbindjs.js",
   "type": "module",

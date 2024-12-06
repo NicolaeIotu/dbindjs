@@ -43,9 +43,11 @@
 
 
     <section>
-        <article><h1 id="dbindjs">dbindjs</h1>
+        <article><p><img src="https://github.com/NicolaeIotu/dbindjs/workflows/CI/badge.svg" alt="Actions Status">
+<img src="https://github.com/NicolaeIotu/dbindjs/workflows/Coverage/badge.svg" alt="Actions Status"></p>
+<h1 id="dbindjs">dbindjs</h1>
 <p><strong>dbindjs</strong> is data binding for Javascript.</p>
-<p>Import with <code>import { dbind } from 'dbindjs'</code></p>
+<p><code>import { dbind } from 'dbindjs'</code></p>
 <ul>
 <li><a href="#run-in-browser">Run in Browser</a></li>
 <li><a href="#examples">Examples</a>
@@ -184,10 +186,10 @@ dbind(desc)
 
 // pick a random neuron
 const neuronId = 'n' + Math.round(Math.random() * maxNeurons)
-const shakeTheNetwork = {}
-shakeTheNetwork[neuronId] = dbind.propstore[neuronId].value++
+const probe = {}
+probe[neuronId] = dbind.propstore[neuronId].value++
 
-dbind(shakeTheNetwork)
+dbind(probe)
 </code></pre>
 <h2 id="others">Others</h2>
 <p><strong>dbindjs</strong> incorporates a couple of advantages over existing Javascript data binding libraries:</p>
