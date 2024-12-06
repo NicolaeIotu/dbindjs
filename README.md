@@ -1,8 +1,12 @@
+![Actions Status](https://github.com/NicolaeIotu/dbindjs/workflows/CI/badge.svg)
+![Actions Status](https://github.com/NicolaeIotu/dbindjs/workflows/Coverage/badge.svg)
+
 # dbindjs
 
 **dbindjs** is data binding for Javascript.
 
-Import with `import { dbind } from 'dbindjs'`
+
+`import { dbind } from 'dbindjs'`
 
 
 * [Run in Browser](#run-in-browser)
